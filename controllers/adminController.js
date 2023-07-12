@@ -1,6 +1,6 @@
 const fs = require("fs")
 const path = require("path")
-const { addProperty, subProperty, allPropertyInfo } = require('../models/index');
+const { addProperty, subProperty, allPropertyInfo, tempProperty } = require('../models/index');
 const { propertyValid } = require("../utils/validation");
 
 const dirPath = __dirname;
@@ -124,6 +124,22 @@ exports.viewPropertyInfo = async (req, res) => {
     }
 }
 
+// Change Property Status (suspend & approved)
+exports.changePropertyStatus = async (req, res) => {
+    try {
+        await tempProperty.create(req.body)
+        return res.status(200).json({
+            status: "Success",
+            message: "Update property status"
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            status: "Error",
+            message: error.message
+        })
+    }
+}
 
 
 
